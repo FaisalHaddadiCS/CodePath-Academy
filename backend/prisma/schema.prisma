@@ -1,0 +1,271 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      String   @default("STUDENT") // "STUDENT", "ADMIN"
+  xp        Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile         Profile?
+  progress        UserProgress[]
+  quizAttempts    QuizAttempt[]
+  aiConversations AIConversation[]
+  aiUsageLogs     AIUsage[]
+  achievements    UserAchievement[]
+  challengeAttempts ChallengeAttempt[]
+  challengeCompletions ChallengeCompletion[]
+}
+
+model Profile {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName String?
+  lastName  String?
+  bio       String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  courses     Course[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  title       String
+  titleAr     String?
+  description String
+  descriptionAr String?
+  imageUrl    String?
+  modules     Module[]
+  progress    UserProgress[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Module {
+  id          String   @id @default(uuid())
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title       String
+  titleAr     String?
+  description String?
+  descriptionAr String?
+  order       Int      @default(0)
+  lessons     Lesson[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Lesson {
+  id          String   @id @default(uuid())
+  moduleId    String
+  module      Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  title       String
+  titleAr     String?
+  description String?
+  descriptionAr String?
+  order       Int      @default(0)
+  slides      LessonSlide[]
+  quizzes     Quiz[]
+  progress    UserProgress[]
+  challenges  CodingChallenge[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model LessonSlide {
+  id          String   @id @default(uuid())
+  lessonId    String
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  type        String   // TEXT, IMAGE, CODE, CODE_ANIMATION, QUIZ, SUMMARY
+  content     String   // Stored as JSON string to support varied slide structures
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Quiz {
+  id          String   @id @default(uuid())
+  lessonId    String
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  questions   Question[]
+  attempts    QuizAttempt[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Question {
+  id          String   @id @default(uuid())
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  type        String   // MULTIPLE_CHOICE, TRUE_FALSE
+  text        String
+  explanation String?
+  options     QuestionOption[]
+  answers     QuizAnswer[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model QuestionOption {
+  id          String   @id @default(uuid())
+  questionId  String
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  text        String
+  isCorrect   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model QuizAttempt {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  score       Float
+  answers     QuizAnswer[]
+  createdAt   DateTime @default(now())
+}
+
+model QuizAnswer {
+  id               String   @id @default(uuid())
+  attemptId        String
+  attempt          QuizAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId       String
+  question         Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  selectedOptionId String?
+  isCorrect        Boolean
+  createdAt        DateTime @default(now())
+}
+
+model UserProgress {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId    String?
+  course      Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessonId    String?
+  lesson      Lesson?  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  completed   Boolean  @default(false)
+  lastAccessed DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, courseId, lessonId])
+}
+
+model AIConversation {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String?
+  mode      String   @default("EXPLAIN")
+  messages  String   // JSON string array of {role, content}
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AIUsage {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  requestType String
+  tokens      Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model Achievement {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String
+  imageUrl    String?
+  users       UserAchievement[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model UserAchievement {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  earnedAt      DateTime @default(now())
+
+  @@unique([userId, achievementId])
+}
+
+model CodingChallenge {
+  id          String   @id @default(uuid())
+  lessonId    String?  // Optional, can be standalone or linked to a lesson
+  lesson      Lesson?  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  difficulty  String   @default("Beginner") // Beginner, Intermediate, Advanced
+  language    String   @default("python")
+  starterCode String
+  hints       String?  // JSON array of strings
+  explanation String?
+  xpReward    Int      @default(20)
+  testCases   ChallengeTestCase[]
+  attempts    ChallengeAttempt[]
+  completions ChallengeCompletion[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ChallengeTestCase {
+  id          String   @id @default(uuid())
+  challengeId String
+  challenge   CodingChallenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  input       String?  // JSON or raw string to pass to stdin
+  expected    String   // Expected stdout
+  isHidden    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ChallengeAttempt {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challengeId String
+  challenge   CodingChallenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  code        String
+  passed      Boolean
+  createdAt   DateTime @default(now())
+}
+
+model ChallengeCompletion {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challengeId String
+  challenge   CodingChallenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  xpEarned    Int
+  completedAt DateTime @default(now())
+
+  @@unique([userId, challengeId])
+}

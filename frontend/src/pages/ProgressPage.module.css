@@ -1,0 +1,168 @@
+.page { display: flex; flex-direction: column; gap: 2rem; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.title { font-size: 1.8rem; font-weight: 800; }
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  transition: border-color var(--transition);
+}
+.statCard:hover { border-color: var(--color-accent); }
+
+.statIcon {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+}
+.blue { background: var(--color-accent-light); color: var(--color-accent); }
+.green { background: var(--color-green-light); color: var(--color-green); }
+.purple { background: var(--color-purple-light); color: var(--color-purple); }
+.yellow { background: var(--color-yellow-light); color: var(--color-yellow); }
+
+.statValue { font-size: 2rem; font-weight: 900; line-height: 1; }
+.statLabel { font-size: 0.78rem; color: var(--color-text-muted); font-weight: 500; }
+
+.section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.sectionTitle svg { color: var(--color-accent); }
+
+.courseList { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.courseRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+}
+
+.courseRowLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 200px;
+}
+.courseEmoji { font-size: 1.4rem; }
+.courseName { font-size: 0.9rem; font-weight: 600; }
+.courseSub { font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.1rem; }
+
+.courseRowRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.progressWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 120px;
+}
+
+.progressWrapper .progress-bar { flex: 1; }
+
+.progressPct {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  width: 32px;
+  text-align: right;
+}
+
+/* Quiz list */
+.quizList { display: flex; flex-direction: column; gap: 0.65rem; }
+
+.quizRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+}
+
+.quizLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.scoreCircle {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.scoreGreen { background: var(--color-green-light); color: var(--color-green); }
+.scoreYellow { background: var(--color-yellow-light); color: var(--color-yellow); }
+.scoreRed { background: var(--color-red-light); color: var(--color-red); }
+
+.quizTitle { font-size: 0.9rem; font-weight: 600; }
+.quizMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 0.1rem;
+  flex-wrap: wrap;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-faint);
+}
+.empty p { color: var(--color-text-muted); font-size: 0.9rem; }

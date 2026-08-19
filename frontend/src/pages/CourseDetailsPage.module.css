@@ -1,0 +1,166 @@
+.page { display: flex; flex-direction: column; gap: 2rem; }
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  transition: color var(--transition);
+}
+.back:hover { color: var(--color-accent); }
+
+.hero {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+.heroIcon {
+  width: 80px; height: 80px;
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.heroEmoji { font-size: 2.5rem; }
+
+.heroContent { flex: 1; min-width: 250px; display: flex; flex-direction: column; gap: 0.75rem; }
+
+.heroMeta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+.metaChip {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.heroTitle { font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 800; line-height: 1.2; }
+
+.heroDesc {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.progressSection { display: flex; flex-direction: column; gap: 0.4rem; }
+.progressRow { display: flex; justify-content: space-between; }
+.progressLabel { font-size: 0.8rem; color: var(--color-text-muted); }
+.progressPct { font-size: 0.8rem; font-weight: 700; color: var(--color-accent); }
+
+.body { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+.sectionTitle svg { color: var(--color-accent); }
+
+.outcomeList { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+.outcomeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+.outcomeStar { color: var(--color-yellow); flex-shrink: 0; margin-top: 3px; }
+
+.lessonList { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.lessonRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all var(--transition);
+  gap: 1rem;
+}
+.lessonRow:hover { border-color: var(--color-accent); background: var(--color-accent-light); color: var(--color-text); }
+.lessonRow.lessonComplete { border-color: rgba(16,185,129,0.2); background: var(--color-green-light); }
+
+.lessonLeft { display: flex; align-items: flex-start; gap: 0.75rem; flex: 1; min-width: 0; }
+
+.lessonNum {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--color-surface-3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.lessonTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.lessonMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.lessonDuration, .lessonSlides {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
+}
+
+.lessonRight {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.iconDone { color: var(--color-green); }
+.iconPlay { color: var(--color-accent); }
+
+.lessonBtn {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem;
+  text-align: center;
+}

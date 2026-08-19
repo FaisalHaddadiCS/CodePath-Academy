@@ -1,0 +1,64 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "courses": "Catalog",
+    "aiTutor": "AI Tutor",
+    "login": "Sign In",
+    "register": "Get Started",
+    "logout": "Logout"
+  },
+  "catalog": {
+    "explore": "Explore Courses",
+    "discover": "Discover interactive courses across all fields of Computer Science."
+  },
+  "lesson": {
+    "loading": "Loading lesson...",
+    "notFound": "Lesson not found.",
+    "prev": "Previous",
+    "next": "Next",
+    "complete": "Mark Complete"
+  },
+  "home": {
+    "heroTitle": "Master Computer Science",
+    "heroSubtitle": "Learn programming, algorithms, and more with our interactive platform.",
+    "startLearning": "Start Learning",
+    "viewCourses": "View Courses"
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "firstName": "First Name",
+    "submitLogin": "Login",
+    "submitRegister": "Register",
+    "noAccount": "Don't have an account? Sign up",
+    "hasAccount": "Already have an account? Sign in"
+  },
+  "lesson": {
+    "complete": "Complete Lesson",
+    "next": "Next",
+    "prev": "Previous",
+    "notFound": "Lesson not found.",
+    "noContent": "This lesson has no content yet.",
+    "loading": "Loading lesson...",
+    "completed": "Completed"
+  },
+  "ai": {
+    "title": "AI Tutor",
+    "placeholder": "Ask your tutor...",
+    "send": "Send",
+    "thinking": "AI is thinking...",
+    "error": "AI Tutor is currently unavailable",
+    "learningMode": "Learning Mode"
+  },
+  "modes": {
+    "EXPLAIN": "Explain Concept",
+    "TEACH_ME": "Teach Me",
+    "DEBUG": "Debug Code",
+    "QUIZ_ME": "Quiz Me",
+    "PRACTICE": "Practice Exercise",
+    "HINT": "Give a Hint",
+    "SIMPLIFY": "Simplify (ELI5)"
+  }
+}

@@ -23,8 +23,8 @@ export const csrfOriginCheck = (req: Request, res: Response, next: NextFunction)
 
       if (
         originUrl.protocol !== allowedUrl.protocol ||
-        originUrl.hostname !== allowedUrl.hostname ||
-        originUrl.port !== allowedUrl.port
+        (originUrl.hostname !== allowedUrl.hostname && originUrl.hostname !== 'localhost' && originUrl.hostname !== '127.0.0.1') ||
+        (originUrl.port !== allowedUrl.port && originUrl.hostname !== 'localhost' && originUrl.hostname !== '127.0.0.1')
       ) {
         return res.status(403).json({
           success: false,

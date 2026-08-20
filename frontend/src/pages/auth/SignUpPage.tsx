@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import PasswordField from '../../components/auth/PasswordField';
 import PasswordStrengthMeter, { checkPasswordStrength } from '../../components/auth/PasswordStrengthMeter';
-import { Loader2, AlertCircle, Terminal, CheckCircle } from 'lucide-react';
+import { Loader2, AlertCircle, CheckCircle, Terminal } from 'lucide-react';
 
 const SignUpPage: React.FC = () => {
   const [firstName, setFirstName] = useState('');
@@ -76,18 +76,18 @@ const SignUpPage: React.FC = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-[var(--color-background)] px-4 py-12">
-        <div className="w-full max-w-md text-center space-y-6 bg-[var(--color-surface)] p-8 rounded-2xl border border-[var(--color-border)] shadow-sm mx-auto">
+      <div className="auth-shell">
+        <div className="auth-card auth-success-card">
           <div className="mx-auto w-16 h-16 bg-[var(--color-success-light)] rounded-full flex items-center justify-center">
             <CheckCircle className="w-8 h-8 text-[var(--color-success)]" />
           </div>
-          <h2 className="text-2xl font-bold text-[var(--color-text)]">Check your email</h2>
-          <p className="text-[var(--color-text-secondary)]">
+          <h2 className="auth-title">Check your email</h2>
+          <p className="auth-subtitle">
             {t('auth.checkEmail')}
           </p>
           <Link
             to="/auth/signin"
-            className="block w-full py-3 px-4 rounded-xl text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] transition-colors font-medium"
+            className="auth-submit"
           >
             {t('auth.backToSignIn')}
           </Link>
@@ -97,35 +97,51 @@ const SignUpPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[var(--color-background)] px-4 py-8 relative overflow-hidden">
-      {/* Background glow effects for visual polish */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--color-primary)] bg-opacity-10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[var(--color-secondary)] bg-opacity-10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div className="auth-shell">
+      <div className="auth-backdrop auth-backdrop-one" />
+      <div className="auth-backdrop auth-backdrop-two" />
 
-      <div className="w-full max-w-[420px] bg-[var(--color-surface)] p-6 sm:p-8 rounded-3xl border border-[var(--color-border)] shadow-xl relative z-10 mx-auto">
-        <div className="text-center">
-          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-[var(--color-background)] shadow-sm border border-[var(--color-border)] mb-4">
-            <Terminal className="w-6 h-6 text-[var(--color-primary)]" />
+      <div className="auth-layout auth-layout-signup">
+        <aside className="auth-showcase">
+          <div className="auth-brand">
+            <span className="auth-brand-mark"><Terminal size={18} /></span>
+            <span>CodePath Academy</span>
           </div>
-          <h1 className="text-2xl font-bold text-[var(--color-text)]">
-            {t('auth.createAccount')}
-          </h1>
-          <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
-            {t('auth.createAccountSubtitle')}
-          </p>
-        </div>
+          <div className="auth-showcase-copy">
+            <p className="auth-eyebrow"><Terminal size={15} /> Start with one lesson</p>
+            <h2>Your next breakthrough starts here.</h2>
+            <p>Create your learning space and turn curiosity into consistent progress.</p>
+          </div>
+          <div className="auth-showcase-note">
+            <CheckCircle size={18} />
+            <span>Structured learning, practical challenges, and visible progress.</span>
+          </div>
+        </aside>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <main className="auth-card auth-card-signup">
+          <div className="auth-card-header">
+            <div className="auth-icon-wrapper">
+            <Terminal className="w-6 h-6 text-[var(--color-primary)]" />
+            </div>
+            <h1 className="auth-title">
+            {t('auth.createAccount')}
+            </h1>
+            <p className="auth-subtitle">
+            {t('auth.createAccountSubtitle')}
+            </p>
+          </div>
+
+        <form onSubmit={handleSubmit} className="auth-form auth-form-signup">
           {error && (
-            <div className="p-3 bg-[var(--color-danger)] bg-opacity-10 border border-[var(--color-danger)] border-opacity-20 rounded-xl flex items-start gap-2" role="alert" aria-live="assertive">
+            <div className="auth-error" role="alert" aria-live="assertive">
               <AlertCircle className="w-5 h-5 text-[var(--color-danger)] shrink-0" />
               <p className="text-sm text-[var(--color-danger)]">{error}</p>
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex flex-col gap-1.5 w-full">
-              <label htmlFor="firstName" className="text-sm font-medium text-[var(--color-text-secondary)]">
+          <div className="auth-name-fields">
+            <div className="auth-field">
+              <label htmlFor="firstName" className="auth-label">
                 {t('auth.firstName') || 'First Name'}
               </label>
               <input
@@ -134,13 +150,13 @@ const SignUpPage: React.FC = () => {
                 required
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-shadow"
+                className="auth-input"
                 aria-invalid={!!error}
               />
             </div>
             
-            <div className="flex flex-col gap-1.5 w-full">
-              <label htmlFor="lastName" className="text-sm font-medium text-[var(--color-text-secondary)]">
+            <div className="auth-field">
+              <label htmlFor="lastName" className="auth-label">
                 {t('auth.lastName') || 'Last Name'}
               </label>
               <input
@@ -149,14 +165,14 @@ const SignUpPage: React.FC = () => {
                 required
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-shadow"
+                className="auth-input"
                 aria-invalid={!!error}
               />
             </div>
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-sm font-medium text-[var(--color-text-secondary)]">
+          <div className="auth-field">
+            <label htmlFor="email" className="auth-label">
               {t('auth.email')}
             </label>
             <input
@@ -165,13 +181,13 @@ const SignUpPage: React.FC = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-shadow"
+              className="auth-input"
               dir="ltr"
               aria-invalid={!!error}
             />
           </div>
 
-          <div className="space-y-1">
+          <div className="auth-password-block">
             <PasswordField
               label={t('auth.password')}
               required
@@ -193,7 +209,7 @@ const SignUpPage: React.FC = () => {
             id="confirmPassword"
           />
 
-          <div className="flex items-start gap-3 pt-2">
+          <div className="auth-terms">
             <div className="flex items-center h-5">
               <input
                 id="terms"
@@ -201,37 +217,38 @@ const SignUpPage: React.FC = () => {
                 required
                 checked={termsAccepted}
                 onChange={(e) => setTermsAccepted(e.target.checked)}
-                className="w-4 h-4 rounded border-[var(--color-border)] text-[var(--color-primary)] focus:ring-[var(--color-primary)] bg-[var(--color-surface)] cursor-pointer"
+                className="auth-checkbox"
               />
             </div>
-            <label htmlFor="terms" className="text-sm text-[var(--color-text-secondary)] cursor-pointer leading-tight pt-0.5">
+            <label htmlFor="terms" className="auth-terms-label">
               {t('auth.terms')}
             </label>
           </div>
 
-          <div className="pt-2">
+          <div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-white bg-[var(--color-primary)] hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-primary)] focus:ring-offset-[var(--color-background)] font-medium transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-sm mt-2"
+              className="auth-submit"
               aria-busy={loading}
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('auth.signUp')}
             </button>
           </div>
 
-          <div className="pt-4 mt-4 border-t border-[var(--color-border)] flex items-center justify-center">
-            <p className="text-sm text-[var(--color-text-secondary)] text-center">
+          <div className="auth-footer">
+            <p>
               {t('auth.alreadyHaveAccount')}{' '}
               <Link
                 to="/auth/signin"
-                className="font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-colors"
+                className="auth-link"
               >
                 {t('auth.signIn')}
               </Link>
             </p>
           </div>
         </form>
+        </main>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import PasswordField from '../../components/auth/PasswordField';
-import { Loader2, AlertCircle, Terminal } from 'lucide-react';
+import { Loader2, AlertCircle, BookOpen, Sparkles, Terminal } from 'lucide-react';
 
 const SignInPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -47,35 +47,51 @@ const SignInPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[var(--color-background)] px-4 py-8 relative overflow-hidden">
-      {/* Background glow effects for visual polish */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--color-primary)] bg-opacity-10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[var(--color-secondary)] bg-opacity-10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div className="auth-shell">
+      <div className="auth-backdrop auth-backdrop-one" />
+      <div className="auth-backdrop auth-backdrop-two" />
 
-      <div className="w-full max-w-[420px] bg-[var(--color-surface)] p-6 sm:p-8 rounded-3xl border border-[var(--color-border)] shadow-xl relative z-10 mx-auto">
-        <div className="text-center">
-          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-[var(--color-background)] shadow-sm border border-[var(--color-border)] mb-4">
-            <Terminal className="w-6 h-6 text-[var(--color-primary)]" />
+      <div className="auth-layout auth-layout-signin">
+        <aside className="auth-showcase">
+          <div className="auth-brand">
+            <span className="auth-brand-mark"><Terminal size={18} /></span>
+            <span>CodePath Academy</span>
           </div>
-          <h1 className="text-2xl font-bold text-[var(--color-text)]">
-            {t('auth.welcomeBack')}
-          </h1>
-          <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
-            {t('auth.signInToContinue')}
-          </p>
-        </div>
+          <div className="auth-showcase-copy">
+            <p className="auth-eyebrow"><Sparkles size={15} /> Learn with momentum</p>
+            <h2>Build the skills that move you forward.</h2>
+            <p>One focused space for interactive lessons, practice, and progress you can see.</p>
+          </div>
+          <div className="auth-showcase-note">
+            <BookOpen size={18} />
+            <span>Pick up where your learning journey left off.</span>
+          </div>
+        </aside>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+        <main className="auth-card">
+          <div className="auth-card-header">
+            <div className="auth-icon-wrapper">
+            <Terminal className="w-6 h-6 text-[var(--color-primary)]" />
+            </div>
+            <h1 className="auth-title">
+            {t('auth.welcomeBack')}
+            </h1>
+            <p className="auth-subtitle">
+            {t('auth.signInToContinue')}
+            </p>
+          </div>
+
+        <form onSubmit={handleSubmit} className="auth-form">
           {error && (
-            <div className="p-3 bg-[var(--color-danger)] bg-opacity-10 border border-[var(--color-danger)] border-opacity-20 rounded-xl flex items-start gap-2" role="alert" aria-live="assertive">
+            <div className="auth-error" role="alert" aria-live="assertive">
               <AlertCircle className="w-5 h-5 text-[var(--color-danger)] shrink-0" />
               <p className="text-sm text-[var(--color-danger)]">{error}</p>
             </div>
           )}
 
-          <div className="space-y-4">
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="email" className="text-sm font-medium text-[var(--color-text-secondary)]">
+          <div className="auth-fields">
+            <div className="auth-field">
+              <label htmlFor="email" className="auth-label">
                 {t('auth.email')}
               </label>
               <input
@@ -84,7 +100,7 @@ const SignInPage: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-shadow"
+                className="auth-input"
                 dir="ltr"
                 aria-invalid={!!error}
               />
@@ -99,38 +115,39 @@ const SignInPage: React.FC = () => {
             />
           </div>
 
-          <div className="flex items-center justify-end">
+          <div className="auth-forgot-row">
             <Link
               to="/auth/forgot-password"
-              className="text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+              className="auth-muted-link"
             >
               {t('auth.forgotPassword')}
             </Link>
           </div>
 
-          <div className="pt-2">
+          <div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-white bg-[var(--color-primary)] hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-primary)] focus:ring-offset-[var(--color-background)] font-medium transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-sm"
+              className="auth-submit"
               aria-busy={loading}
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('auth.signIn')}
             </button>
           </div>
 
-          <div className="pt-4 mt-4 border-t border-[var(--color-border)] flex items-center justify-center">
-            <p className="text-sm text-[var(--color-text-secondary)] text-center">
+          <div className="auth-footer">
+            <p>
               {t('auth.noAccount')}{' '}
               <Link
                 to="/auth/signup"
-                className="font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-colors"
+                className="auth-link"
               >
                 {t('auth.createAccount')}
               </Link>
             </p>
           </div>
         </form>
+        </main>
       </div>
     </div>
   );
